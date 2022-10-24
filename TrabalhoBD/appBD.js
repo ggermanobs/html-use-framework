@@ -19,20 +19,19 @@ function requestOfServer() {
 }
 
 function submitDataOfUser() {
-    const nameOfUser = $("#name").val()
-    const lasNameOfUser = $("#last_name").val()
-    const ageOfUser = $("#age").val()      
+    const nomeCarro = $("#carName").val()
+    const modelo = $("#model").val()
+    
     $.ajax({
-        "url": "http://localhost:8000/insert-data",
+        "url": "http://localhost:8000/car-insert",
         "method": "POST",
         "timeout": 0,
         "headers": {
           "Content-Type": "application/json; charset=UTF-8"
         },
         "data": JSON.stringify({
-            name:nameOfUser,
-            last_name:lasNameOfUser,
-            age:ageOfUser
+            carName:nomeCarro,
+            model:modelo  
         }) 
     }).done(function (response) {
         
@@ -41,29 +40,24 @@ function submitDataOfUser() {
             closeSuccessMsgError()
             $("#success-record-msg").css('display','block')
 
-            $("#name").val('')
-            $("#last_name").val('')
-            $("#age").val('')            
+            $("#carName").val('')
+            $("#model").val('')
+                  
         } else { closeSuccessMsg() 
             let errorMsg;
             let errorWidth = '350px'
 
-            if(response.missingAtribute ==='name'){
-                errorMsg = 'O campo nome está ausente, fazer inserir'
+            if(response.missingAtribute ==='carName'){
+                errorMsg = 'O campo nome do carro está ausente, favor inserir'
                 errorWidth = '415px'
             }
 
-            if(response.missingAtribute ==='last_name'){
-                errorMsg = 'O campo sobrenome está ausente, fazer inserir'
+            if(response.missingAtribute ==='model'){
+                errorMsg = 'O campo modelo do carro está ausente, favor inserir'
                 errorWidth = '435px'
             }
 
-            if(response.missingAtribute ==='age'){
-                errorMsg = 'O campo idade está ausente, fazer inserir'
-                errorWidth = '415px'
-            }
 
-            
 
             console.log(response)
             $("#error-record-msg").css('display' , 'block')
